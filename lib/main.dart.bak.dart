@@ -11,27 +11,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginForm(),
+      home: LoginMSO(),
     );
   }
 }
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({Key key}) : super(key: key);
+class LoginMSO extends StatefulWidget {
+  const LoginMSO({Key key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _LoginFormState createState() => _LoginFormState();
+  _LoginMSOState createState() => _LoginMSOState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _LoginMSOState extends State<LoginMSO> {
   //email的控制器
   final emailController = TextEditingController();
   //密码的控制器
   final passwordController = TextEditingController();
-  bool _isHidden = false;
+  bool _showPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,6 @@ class _LoginFormState extends State<LoginForm> {
                     border: OutlineInputBorder(),
                     labelText: 'Email',
                     hintText: 'Enter valid email id as abc@gmail.com'),
-                obscureText: false,
               ),
             ),
             Padding(
@@ -73,16 +72,22 @@ class _LoginFormState extends State<LoginForm> {
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                 controller: passwordController,
-                obscureText: !_isHidden,
+                obscureText: !_showPassword,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Password',
-                  suffix: InkWell(
-                    onTap: _togglePasswordView,
-                    child: Icon(
-                        _isHidden ? Icons.visibility : Icons.visibility_off),
-                  ),
+                  // border: OutlineInputBorder(),
                   labelText: 'Password',
+                  hintText: 'Enter secure password',
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _showPassword = !_showPassword;
+                      });
+                    },
+                    child: Icon(
+                      _showPassword ? Icons.visibility : Icons.visibility_off,
+                    ),
+                  ),
+                  // labelText: 'Password'),
                 ),
               ),
             ),
@@ -122,11 +127,5 @@ class _LoginFormState extends State<LoginForm> {
         ),
       ),
     );
-  }
-
-  void _togglePasswordView() {
-    setState(() {
-      _isHidden = !_isHidden;
-    });
   }
 }
