@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'HomePage.dart';
+
+const users = {
+  'ttyen.james@gmail.com': '12345',
+  'test': '12345',
+};
 
 void main() {
   runApp(const MyApp());
@@ -102,9 +107,35 @@ class _LoginFormState extends State<LoginForm> {
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
+                // ignore: void_checks
                 onPressed: () {
-                  debugPrint(emailController.text.toString());
-                  debugPrint(passwordController.text.toString());
+                  String _email = emailController.text.toString();
+                  String _password = passwordController.text.toString();
+                  bool _checkOk = true;
+                  debugPrint(_email);
+                  debugPrint(_password);
+                  if (!users.containsKey(_email)) {
+                    _checkOk = false;
+                  }
+
+                  if (users[_email] != _password) {
+                    _checkOk = false;
+                    // return 'Password does not match';
+                  }
+
+                  if (!_checkOk) {
+                    Fluttertoast.showToast(
+                      msg: "This Toast for wrong id & password !",
+                      gravity: ToastGravity.BOTTOM,
+                      textColor: Colors.black,
+                      backgroundColor: Colors.red,
+                      fontSize: 16.0,
+                    );
+                    return 'ID | Password not match';
+                  }
+                  // if (users[data.name] != data.password) {
+                  //   return 'Password does not match';
+                  // }
                   Navigator.push(context,
                       MaterialPageRoute(builder: (_) => const HomePage()));
                 },
