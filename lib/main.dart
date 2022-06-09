@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginForm(),
     );
@@ -80,7 +80,7 @@ class _LoginFormState extends State<LoginForm> {
                 controller: passwordController,
                 obscureText: !_isHidden,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   hintText: 'Password',
                   suffix: InkWell(
                     onTap: _togglePasswordView,
@@ -109,21 +109,21 @@ class _LoginFormState extends State<LoginForm> {
               child: TextButton(
                 // ignore: void_checks
                 onPressed: () {
-                  String _email = emailController.text.toString();
-                  String _password = passwordController.text.toString();
-                  bool _checkOk = true;
-                  debugPrint(_email);
-                  debugPrint(_password);
-                  if (!users.containsKey(_email)) {
-                    _checkOk = false;
+                  String email = emailController.text.toString();
+                  String password = passwordController.text.toString();
+                  bool checkOk = true;
+                  debugPrint(email);
+                  debugPrint(password);
+                  if (!users.containsKey(email)) {
+                    checkOk = false;
                   }
 
-                  if (users[_email] != _password) {
-                    _checkOk = false;
+                  if (users[email] != password) {
+                    checkOk = false;
                     // return 'Password does not match';
                   }
 
-                  if (!_checkOk) {
+                  if (!checkOk) {
                     Fluttertoast.showToast(
                       msg: "This Toast for wrong id & password !",
                       gravity: ToastGravity.BOTTOM,
